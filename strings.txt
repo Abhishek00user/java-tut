@@ -1,0 +1,293 @@
+Strings in Java are **very important** (used everywhere + common in interviews). Let’s build your understanding step-by-step.
+
+---
+
+# 🔷 What is a String?
+
+👉 A **String** is a sequence of characters.
+
+```java
+String s = "Hello";
+```
+
+👉 `"Hello"` is a **string literal**
+
+---
+
+# 🔶 How Strings Work Internally
+
+## 🔹 String Pool Concept (🔥 Important)
+👉 Java stores string literals in a special memory area called:
+
+➡️ **String Constant Pool (SCP)**
+
+### Example:
+
+```java
+String s1 = "Java";
+String s2 = "Java";
+```
+
+👉 Both refer to **same memory location** ✅
+
+---
+
+## 🔹 Using `new` Keyword
+
+```java
+String s1 = new String("Java");
+String s2 = new String("Java");
+```
+
+👉 Creates **different objects** ❌
+(even if content is same)
+
+---
+
+# 🔶 Immutable Nature of Strings
+
+👉 Strings are **immutable** (cannot be changed)
+
+```java
+String s = "Hello";
+s.concat(" World");
+System.out.println(s);
+```
+
+👉 Output:
+
+```
+Hello
+```
+
+👉 Because a **new object is created**, original is unchanged
+
+---
+
+# 🔥 Why Immutable?
+
+* Security 🔐
+* Thread safety
+* Performance (via string pool)
+
+---
+
+# 🔶 Comparing Strings (⚠️ Very Important)
+
+## ❌ Using `==`
+
+```java
+String a = "Java";
+String b = "Java";
+
+System.out.println(a == b);  // true (same reference)
+```
+
+---
+
+## ✔️ Using `.equals()`
+
+```java
+String a = new String("Java");
+String b = new String("Java");
+
+System.out.println(a.equals(b));  // true (content compare)
+```
+
+👉 Always use `.equals()` for comparison
+
+---
+
+# 🔶 Common String Methods
+
+```java
+String s = "Hello World";
+```
+
+| Method          | Description        |
+| --------------- | ------------------ |
+| `length()`      | length of string   |
+| `charAt(i)`     | character at index |
+| `substring()`   | extract part       |
+| `toLowerCase()` | lowercase          |
+| `toUpperCase()` | uppercase          |
+| `trim()`        | remove spaces      |
+| `contains()`    | check substring    |
+
+---
+
+### Example
+
+```java
+System.out.println(s.length());      // 11
+System.out.println(s.charAt(0));     // H
+System.out.println(s.substring(0,5));// Hello
+```
+
+---
+
+# 🔶 String vs StringBuilder vs StringBuffer
+
+| Feature     | String | StringBuilder | StringBuffer |
+| ----------- | ------ | ------------- | ------------ |
+| Mutable     | ❌ No   | ✅ Yes         | ✅ Yes        |
+| Thread-safe | ❌ No   | ❌ No          | ✅ Yes        |
+| Performance | Slow   | Fast          | Medium       |
+
+---
+
+# 🔥 Important Example
+
+```java
+String s = "Hello";
+s = s + " World";
+```
+
+👉 Actually creates **new object** every time
+
+---
+
+# 🧠 Interview Points
+
+* Strings are **immutable**
+* Stored in **String Constant Pool**
+* `==` vs `.equals()` difference ⚠️
+* Use `StringBuilder` for modifications
+
+---
+
+# ⚡ Common Mistake
+
+❌ Thinking string changes in place
+✔️ It always creates a new object
+
+---
+
+# 💡 One-Line Summary
+
+👉 **String = immutable sequence of characters stored in string pool**
+
+Great question — this is exactly where most people get confused 👍
+
+---
+
+# 🔷 What happens to the old String object?
+
+👉 When you modify a String, Java creates a **new object**
+👉 The **old object remains in memory temporarily**
+
+---
+
+## 🔶 Example
+
+```java
+String s = "Hello";
+s = s + " World";
+```
+
+### Step-by-step:
+
+1️⃣ `"Hello"` is created in **String Pool**
+
+2️⃣ `"Hello World"` → new object is created
+
+3️⃣ `s` now points to `"Hello World"`
+
+👉 But what about `"Hello"` ❓
+
+---
+
+# 🔥 Answer: Garbage Collection
+
+👉 If no reference points to `"Hello"`, it becomes:
+
+➡️ **Eligible for Garbage Collection (GC)**
+
+---
+
+## 🔹 Visual Understanding
+
+![Image](https://images.openai.com/static-rsc-4/m6AfijJdMyyXUyxaFXZ1Q-k_ha9ZZJNBSqbJgosX4m61SvJmOGOweGnIT8FIOLTctTzNs_w2QfUDqqWMJtxkiLC_1vF_p08f2Ymx22t8-dXC4pSvO2p8eWTUkqS_BRqxMgcnYa8c2ex_99MRi3saxC5wvslph6Ev7iISH4POlEhgtHoY09lAqV7VKeyavROK?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/ohvN_QuYtxZnpX9g_HQ4kOCOSunxK5eFPuFO6HWq1hbIr7qvlWEj4zEWico0YnKyGgdSDOSgpewWO0VYkFwlnZ1xZGCWMPWxJme7r_yLFKOjvM1_tHqv9oB1cgUD9EFRfhBATibtdUOCtTf-OetxWrCIuOXFhWsdepd3rcbPn9K0LU6RTLtt0ubDhK7F5dy9?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/Z_CmJRb-oRmVwQMd3LjTcilcBWOC9M7HD4hva_LIiLgfzoe7Mhx0rOwPfQDFiM00NhppYN9y7tuxfyf43tXjufDnEW5WobQJwFTQiDeHDEtd9Jz-6o_TRp67PkaG7uUVSd2OkwS95QYJKBSEYzlAIg8p2LlCKXPPkMz1M9JkJHoNGaNr4yCq3PI7R2ltzqZJ?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/TmRM-uH7HYy08SE2E7sS9dWo7stfMvea5Az55aU52f8-Q8_zdCjwCEu_lhNZv6FAxrvCm9iRsjD4F0_wmv4hERm2AHhRZEVCSIhhmdVmMvD2OZbob_i7vmp0tVlbV-FMEnNm1MmJGFRRS37ruGLERmqmclIVSkTb5t-QSMmbBk__S-6Oav8MOcSh5fc9KLfd?purpose=fullsize)
+
+* `s` → now points to `"Hello World"`
+* `"Hello"` → no reference ❌
+* JVM marks it for cleanup 🧹
+
+---
+
+# 🔶 Important Case
+
+```java
+String s1 = "Hello";
+String s2 = s1;
+
+s1 = s1 + " World";
+```
+
+👉 Now:
+
+* `s1` → `"Hello World"`
+* `s2` → `"Hello"` (still exists!)
+
+👉 So `"Hello"` is NOT deleted ❌
+
+---
+
+# 🔶 When does deletion actually happen?
+
+👉 Java uses **Garbage Collector (GC)**
+
+* Automatically runs (you don’t control it directly)
+* Removes unused objects from memory
+
+---
+
+# 🔥 Key Concept
+
+👉 Object is deleted **only when NO reference points to it**
+
+---
+
+# ⚡ Interview One-Liner
+
+👉 **Old string objects are not immediately deleted; they become eligible for garbage collection when no references exist**
+
+---
+
+# 🧠 Why this matters
+
+👉 If you keep modifying strings:
+
+```java
+String s = "";
+for(int i = 0; i < 1000; i++) {
+    s = s + i;
+}
+```
+
+👉 This creates **1000+ objects** ❌ → inefficient
+
+✔️ Use:
+
+```java
+StringBuilder sb = new StringBuilder();
+```
+
+---
+
+# 💡 Final Summary
+
+👉 **Old string stays in memory until GC removes it (only if no reference exists)**
+
+---
+
+If you want, next I can:
+
+* 🔥 Deep dive into **Garbage Collection (very important for interviews)**
+* Or show **why StringBuilder is faster with internal working**
