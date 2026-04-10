@@ -1,0 +1,202 @@
+Got it — you want a **deep, interview-level explanation of the full `main()` signature**. Let’s break it properly 👇
+
+---
+
+# 🔷 Full Signature
+
+```java
+public static void main(String[] args)
+```
+
+Each keyword is **there for a reason** — nothing is random.
+
+---
+
+# 🔶 1️⃣ `public`
+
+👉 Means: **accessible from anywhere**
+
+### 🔹 Why needed?
+
+* JVM is outside your class
+* It must be able to **access `main()`**
+
+❌ If not public:
+
+```java
+static void main(String[] args)
+```
+
+👉 JVM **cannot access it → runtime error**
+
+---
+
+# 🔶 2️⃣ `static`
+
+👉 Means: **belongs to class, not object**
+
+### 🔹 Why needed?
+
+* JVM calls `main()` **without creating object**
+
+If it was non-static:
+
+```java
+public void main(String[] args)
+```
+
+👉 JVM would need:
+
+```java
+Main obj = new Main(); // ❌ Not possible reliably
+obj.main(args);
+```
+
+👉 Problem:
+
+* Which constructor?
+* What parameters?
+
+➡️ So Java avoids this → makes `main()` static
+
+---
+
+# 🔶 3️⃣ `void`
+
+👉 Means: **no return value**
+
+### 🔹 Why?
+
+* JVM doesn’t expect anything back from `main()`
+* It just needs a starting point
+
+---
+
+# 🔶 4️⃣ `main`
+
+👉 This is the **method name**
+
+### 🔹 Why specifically "main"?
+
+* JVM is **hardcoded** to look for this name
+
+❌ If you write:
+
+```java
+public static void start(String[] args)
+```
+
+👉 Program won’t run ❌
+
+---
+
+# 🔶 5️⃣ `String[] args`
+
+👉 This is for **command-line arguments**
+
+### 🔹 Example:
+
+```bash
+java Main hello world
+```
+
+👉 Inside Java:
+
+```java
+System.out.println(args[0]); // hello
+System.out.println(args[1]); // world
+```
+
+---
+
+## 🔹 Can we change it?
+
+👉 YES (partially)
+
+✔️ These are valid:
+
+```java
+public static void main(String args[])
+public static void main(String... args)  // varargs
+```
+
+👉 Even variable name can change:
+
+```java
+public static void main(String[] abc)
+```
+
+---
+
+# 🔥 Execution Flow (Important)
+
+1️⃣ JVM loads class
+2️⃣ Looks for:
+
+```java
+public static void main(String[] args)
+```
+
+3️⃣ Calls it directly:
+
+```java
+Main.main(args);
+```
+
+👉 No object creation involved
+
+---
+
+# 🧠 Common Interview Traps
+
+## ❌ Wrong Signature
+
+```java
+public void main(String[] args)   // not static ❌
+private static void main(...)     // not public ❌
+```
+
+👉 JVM won’t run program
+
+---
+
+## ❓ Can we overload `main()`?
+
+```java
+public static void main(int x)
+```
+
+👉 YES ✅
+
+But JVM only calls:
+
+```java
+public static void main(String[] args)
+```
+
+---
+
+# 🔥 Final Breakdown Table
+
+| Part       | Meaning               | Why Needed              |
+| ---------- | --------------------- | ----------------------- |
+| `public`   | Accessible everywhere | JVM access              |
+| `static`   | No object required    | Direct call             |
+| `void`     | No return value       | JVM doesn't need output |
+| `main`     | Entry method name     | JVM standard            |
+| `String[]` | Input arguments       | CLI support             |
+
+---
+
+# 💡 Perfect Interview Answer
+
+👉
+**“The `main()` method is declared public so JVM can access it, static so it can be called without object creation, void because it doesn't return anything, and it accepts `String[] args` to handle command-line arguments.”**
+
+---
+
+# ⚡ One-Line Summary
+
+👉 **`main()` is a JVM-recognized static entry point designed for direct execution without object creation**
+
+---

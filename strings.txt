@@ -203,18 +203,6 @@ s = s + " World";
 
 ➡️ **Eligible for Garbage Collection (GC)**
 
----
-
-## 🔹 Visual Understanding
-
-![Image](https://images.openai.com/static-rsc-4/m6AfijJdMyyXUyxaFXZ1Q-k_ha9ZZJNBSqbJgosX4m61SvJmOGOweGnIT8FIOLTctTzNs_w2QfUDqqWMJtxkiLC_1vF_p08f2Ymx22t8-dXC4pSvO2p8eWTUkqS_BRqxMgcnYa8c2ex_99MRi3saxC5wvslph6Ev7iISH4POlEhgtHoY09lAqV7VKeyavROK?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/ohvN_QuYtxZnpX9g_HQ4kOCOSunxK5eFPuFO6HWq1hbIr7qvlWEj4zEWico0YnKyGgdSDOSgpewWO0VYkFwlnZ1xZGCWMPWxJme7r_yLFKOjvM1_tHqv9oB1cgUD9EFRfhBATibtdUOCtTf-OetxWrCIuOXFhWsdepd3rcbPn9K0LU6RTLtt0ubDhK7F5dy9?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/Z_CmJRb-oRmVwQMd3LjTcilcBWOC9M7HD4hva_LIiLgfzoe7Mhx0rOwPfQDFiM00NhppYN9y7tuxfyf43tXjufDnEW5WobQJwFTQiDeHDEtd9Jz-6o_TRp67PkaG7uUVSd2OkwS95QYJKBSEYzlAIg8p2LlCKXPPkMz1M9JkJHoNGaNr4yCq3PI7R2ltzqZJ?purpose=fullsize)
-
-![Image](https://images.openai.com/static-rsc-4/TmRM-uH7HYy08SE2E7sS9dWo7stfMvea5Az55aU52f8-Q8_zdCjwCEu_lhNZv6FAxrvCm9iRsjD4F0_wmv4hERm2AHhRZEVCSIhhmdVmMvD2OZbob_i7vmp0tVlbV-FMEnNm1MmJGFRRS37ruGLERmqmclIVSkTb5t-QSMmbBk__S-6Oav8MOcSh5fc9KLfd?purpose=fullsize)
-
 * `s` → now points to `"Hello World"`
 * `"Hello"` → no reference ❌
 * JVM marks it for cleanup 🧹
@@ -291,3 +279,158 @@ If you want, next I can:
 
 * 🔥 Deep dive into **Garbage Collection (very important for interviews)**
 * Or show **why StringBuilder is faster with internal working**
+
+
+Let’s understand **`StringBuffer` and `StringBuilder`** properly — this is a **very common interview topic** and also important for writing efficient Java code.
+
+---
+
+# 🔷 Why do we need them?
+
+👉 Problem with `String`:
+
+* Strings are **immutable**
+* Every modification creates a **new object** ❌ (memory + performance issue)
+
+👉 Solution:
+
+➡️ **Mutable strings** → `StringBuffer` & `StringBuilder`
+
+---
+
+# 🔶 What is `StringBuilder`?
+
+👉 A **mutable** class used to modify strings efficiently
+
+```java
+StringBuilder sb = new StringBuilder("Hello");
+sb.append(" World");
+System.out.println(sb);
+```
+
+👉 Output:
+
+```
+Hello World
+```
+
+✅ Same object modified (no new object creation)
+
+---
+
+# 🔶 What is `StringBuffer`?
+
+👉 Similar to `StringBuilder`, but:
+
+➡️ **Thread-safe** (synchronized)
+
+```java
+StringBuffer sb = new StringBuffer("Hello");
+sb.append(" World");
+System.out.println(sb);
+```
+
+---
+
+# 🔥 Key Difference
+
+| Feature     | StringBuilder | StringBuffer         |
+| ----------- | ------------- | -------------------- |
+| Mutable     | ✅ Yes         | ✅ Yes                |
+| Thread-safe | ❌ No          | ✅ Yes (synchronized) |
+| Performance | 🚀 Faster     | 🐢 Slower            |
+| Use case    | Single-thread | Multi-thread         |
+
+---
+
+# 🔶 Internal Working (Concept)
+👉 Both use:
+
+* **Resizable character array**
+* Modify content **in-place**
+
+---
+
+# 🔶 Common Methods
+
+```java
+StringBuilder sb = new StringBuilder("Hello");
+```
+
+| Method       | Description       |
+| ------------ | ----------------- |
+| `append()`   | add text          |
+| `insert()`   | insert at index   |
+| `delete()`   | remove part       |
+| `reverse()`  | reverse string    |
+| `toString()` | convert to String |
+
+---
+
+### 🔹 Example
+
+```java
+sb.append(" World");     // Hello World
+sb.insert(5, " Java");   // Hello Java World
+sb.delete(5, 10);        // Hello World
+sb.reverse();            // dlroW olleH
+```
+
+---
+
+# 🔥 Performance Example
+
+❌ Using String:
+
+```java
+String s = "";
+for(int i = 0; i < 1000; i++) {
+    s = s + i;
+}
+```
+
+👉 Creates many objects ❌
+
+---
+
+✔️ Using StringBuilder:
+
+```java
+StringBuilder sb = new StringBuilder();
+for(int i = 0; i < 1000; i++) {
+    sb.append(i);
+}
+```
+
+👉 Efficient ✅
+
+---
+
+# 🧠 Interview Points
+
+* Both are **mutable**
+* `StringBuffer` is **thread-safe**
+* `StringBuilder` is **faster**
+* Use `StringBuilder` in **99% cases**
+
+---
+
+# ⚡ When to use what?
+
+👉 Use **StringBuilder**:
+
+* Normal programs
+* Single-threaded apps
+
+👉 Use **StringBuffer**:
+
+* Multi-threaded environment
+* Shared mutable string
+
+---
+
+# 💡 One-Line Summary
+
+👉 **StringBuilder = fast & mutable | StringBuffer = thread-safe & mutable**
+
+
