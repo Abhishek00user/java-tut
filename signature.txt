@@ -200,3 +200,177 @@ public static void main(String[] args)
 👉 **`main()` is a JVM-recognized static entry point designed for direct execution without object creation**
 
 ---
+
+
+
+Let’s understand **Command Line Arguments in Java** clearly — this is simple but very useful (and often asked in exams/interviews).
+
+---
+
+# 🔷 What are Command Line Arguments?
+
+👉 **Command line arguments** are values passed to a Java program **when you run it from the terminal/command prompt**
+
+---
+
+# 🔶 Where do they go?
+
+👉 They are stored in:
+
+```java
+String[] args
+```
+
+inside the `main()` method
+
+---
+
+# 🔶 Example
+
+## 🔹 Java Code
+
+```java
+class Main {
+    public static void main(String[] args) {
+        System.out.println(args[0]);
+        System.out.println(args[1]);
+    }
+}
+```
+
+---
+
+## 🔹 Run from terminal
+
+```bash
+java Main Hello World
+```
+
+---
+
+## 🔹 Output
+
+```
+Hello
+World
+```
+
+👉 So:
+
+* `args[0] = "Hello"`
+* `args[1] = "World"`
+
+---
+
+# 🔥 Important Points
+
+## 1️⃣ Always Strings
+
+👉 All inputs are stored as **String**
+
+```java
+System.out.println(args[0] + args[1]);
+```
+
+👉 Output:
+
+```
+HelloWorld
+```
+
+---
+
+## 2️⃣ Convert if needed
+
+```java
+int a = Integer.parseInt(args[0]);
+int b = Integer.parseInt(args[1]);
+
+System.out.println(a + b);
+```
+
+---
+
+## 🔶 Example (Addition Program)
+
+```java
+class Main {
+    public static void main(String[] args) {
+        int a = Integer.parseInt(args[0]);
+        int b = Integer.parseInt(args[1]);
+
+        System.out.println("Sum = " + (a + b));
+    }
+}
+```
+
+### Run:
+
+```bash
+java Main 5 10
+```
+
+### Output:
+
+```
+Sum = 15
+```
+
+---
+
+# 🔶 Looping Through Arguments
+
+```java
+for (int i = 0; i < args.length; i++) {
+    System.out.println(args[i]);
+}
+```
+
+---
+
+# 🔶 Alternative Syntax
+
+```java
+public static void main(String... args)
+```
+
+👉 This is **varargs** (same as array)
+
+---
+
+# 🔥 Common Errors
+
+## ❌ Accessing without checking
+
+```java
+System.out.println(args[0]);  // may crash
+```
+
+👉 If no argument passed → ❌ `ArrayIndexOutOfBoundsException`
+
+✔️ Safe:
+
+```java
+if (args.length > 0) {
+    System.out.println(args[0]);
+}
+```
+
+---
+
+# 🧠 Interview Points
+
+* Passed at runtime via terminal
+* Stored in `String[] args`
+* Always **String type**
+* Needs conversion for numbers
+* Can use `String... args`
+
+---
+
+# 💡 One-Line Summary
+
+👉 **Command line arguments = inputs passed at runtime and stored as String array in `main()`**
+
+---
+
